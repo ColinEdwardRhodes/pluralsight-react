@@ -14,10 +14,12 @@ var config = {
 	devBaseUrl: 'http://localhost',
 	paths: {
 		html: './src/*.html',
+		images: './src/images/*.jpg',
 		js: './src/**/*.js',
 		css: [
       		'node_modules/bootstrap/dist/css/bootstrap.min.css',
-      		'node_modules/bootstrap/dist/css/bootstrap-theme.min.css'
+      		'node_modules/bootstrap/dist/css/bootstrap-theme.min.css',
+      		'node_modules/toastr/toastr.css'
     	],
 		dist: './dist',
 		mainJs: './src/main.js'
@@ -42,6 +44,12 @@ gulp.task('open', ['connect'], function() {
 gulp.task('html', function() {
 	gulp.src(config.paths.html)
 		.pipe(gulp.dest(config.paths.dist))
+		.pipe(connect.reload());
+});
+
+gulp.task('images', function() {
+	gulp.src(config.paths.images)
+		.pipe(gulp.dest(config.paths.dist + '/images'))
 		.pipe(connect.reload());
 });
 
@@ -72,4 +80,4 @@ gulp.task('watch', function() {
 	gulp.watch(config.paths.js, ['js', 'lint']);
 });
 
-gulp.task('default', ['html', 'js', 'css', 'lint', 'open', 'watch']);
+gulp.task('default', ['html', 'images', 'js', 'css', 'lint', 'open', 'watch']);
